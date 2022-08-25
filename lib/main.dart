@@ -7,10 +7,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
-         // scaffoldBackgroundColor: Color(0xff45278B),
+        appBarTheme: const AppBarTheme(
+            color: Color(0x222E335A)
+        ),
+        scaffoldBackgroundColor: Color(0xff45278B),
       ),
+      debugShowCheckedModeBanner: false,
       home: LoadingScreen(),
     );
   }
