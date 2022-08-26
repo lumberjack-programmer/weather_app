@@ -11,7 +11,6 @@ class Location {
     try {
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: locationAccuracy);
-
       _latitude = position.latitude;
       _longitude = position.longitude;
     } catch (e) {
