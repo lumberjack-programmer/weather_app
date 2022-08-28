@@ -22,14 +22,26 @@ class ColumnForecast extends StatelessWidget {
   final VoidCallback toggleState;
 
 
+  // weekDayName: getDateFormatted(widget.weatherList![i]['dt_txt']),
+  // dayMonth: '${widget.weatherList![i]['dt_txt']}',
+  // assetImage: AssetImage(WeatherModel.getWeatherImage(widget.weatherList![i]['weather'][0]['main'])),
+  // degrees: '${widget.weatherList![i]['main']['temp']}',
+  // description: '${widget.weatherList![i]['weather'][0]['description']}',
+  // minDegrees: '${(widget.weatherList![i]['main']['temp_min'] - 273.15).toStringAsFixed(0)}',
+  // maxDegrees: '${(widget.weatherList![i]['main']['temp'] - 273.15).toStringAsFixed(0)}',
+  // toggle: forecastToggle,
+  // toggleState: () {
+
+
   @override
   Widget build(BuildContext context) {
     List<Widget> forecastLongList = [
       Text(weekDayName),
       SizedBox(height: 10.0,),
-      Text(dayMonth, style: TextStyle(fontSize: 12.0, color: Color(0xffa29fbc))),
       SizedBox(height: 5.0,),
-      Text(description, style: TextStyle(fontSize: 12.0, color: Color(0xffa29fbc)),),
+      Container(
+          padding: EdgeInsets.symmetric(horizontal: 19.0),
+          child: Text(description, style: TextStyle(fontSize: 12.0, color: Color(0xffa29fbc)),)),
       Container(
         margin: EdgeInsets.only(
             bottom: 20.0, top: 20.0, left: 5.0, right: 5.0),
@@ -38,6 +50,8 @@ class ColumnForecast extends StatelessWidget {
           image: assetImage,
         ),
       ),
+      Text(dayMonth, style: TextStyle(fontSize: 12.0, color: Color(0xffa29fbc))),
+      SizedBox(height: 5.0,),
       Text('$minDegrees°'),
       Text('$maxDegrees°'),
     ];
@@ -47,15 +61,26 @@ class ColumnForecast extends StatelessWidget {
       Column(
         children: [
           Text(weekDayName),
+          SizedBox(height: 5.0,),
+          Text('$degrees°',
+              style: TextStyle(
+              fontSize: 20.0,
+              color: Color(0xffa29fbc),
+              fontWeight: FontWeight.w500,
+              ),),
           Container(
             margin: EdgeInsets.only(
                 bottom: 20.0, top: 25.0, left: 5.0, right: 5.0),
-            child: Image(
-              width: 70.0,
-              image: assetImage,
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 10.0),
+              child: Image(
+                width: 70.0,
+                image: assetImage,
+              ),
             ),
           ),
-          Text('$degrees°'),
+          Text(dayMonth),
+
         ],
       ),
     ];

@@ -10,11 +10,11 @@ class Chart extends StatefulWidget {
 
 class _ChartState extends State<Chart> {
   List<SalesData> data = [
-    SalesData('6PM', 18),
-    SalesData('9PM', 17),
-    SalesData('MIDN', 15),
-    SalesData('3AM', 15),
-    SalesData('6AM', 14)
+    SalesData('12AM', 16),
+    SalesData('NOON', 17),
+    SalesData('3PM', 27),
+    SalesData('6PM', 32),
+    SalesData('9PM', 32),
   ];
 
 
@@ -32,7 +32,7 @@ class _ChartState extends State<Chart> {
                   dataSource: data,
                   xValueMapper: (SalesData sales, _) => sales.year,
                   yValueMapper: (SalesData sales, _) => sales.sales,
-                  name: 'T',
+                  name: 'Temp',
                   // Enable data label
                   dataLabelSettings: DataLabelSettings(isVisible: true))
             ]),

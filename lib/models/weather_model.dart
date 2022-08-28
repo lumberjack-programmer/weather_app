@@ -1,4 +1,4 @@
-class WeatherModel {
+class WeatherModelData {
 
   final String cityName;
   final double currentTemp;
@@ -16,9 +16,10 @@ class WeatherModel {
   final int grnd_level;
   final double temp_min;
   final double temp_max;
+  final List weatherDayList;
 
 
-  WeatherModel(
+  WeatherModelData(
   this.cityName,
   this.currentTemp,
   this.localtime,
@@ -34,7 +35,8 @@ class WeatherModel {
   this.sea_level,
   this.grnd_level,
   this.temp_min,
-  this.temp_max);
+  this.temp_max,
+      this.weatherDayList);
 
 }
 

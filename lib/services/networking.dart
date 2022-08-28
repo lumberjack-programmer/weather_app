@@ -35,6 +35,8 @@ class ApiService {
 
 
 
+
+
   Future<WeatherData> fetchCityLocation() async {
     final locationResponse = await http.get(Uri.parse('https://api.openweathermap.org/geo/1.0/direct?q=New York&limit=200&appid=51d2e29f4181530ee1e5223365412e1c'));
 
@@ -51,7 +53,7 @@ class ApiService {
     print(latitude);
     print(longitude);
 
-    print('https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appid=51d2e29f4181530ee1e5223365412e1c');
+    // print('https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appid=51d2e29f4181530ee1e5223365412e1c');
     // final response = await http.get(Uri.parse('https://api.openweathermap.org/data/2.5/forecast?lat=37.33233141&lon=-122.0312186&appid=51d2e29f4181530ee1e5223365412e1c'));
     final response = await http.get(Uri.parse('https://api.openweathermap.org/data/2.5/forecast?lat=$latitude&lon=$longitude&appid=51d2e29f4181530ee1e5223365412e1c'));
 
@@ -60,8 +62,19 @@ class ApiService {
     } else {
       throw Exception('Failed to fetch data');
     }
+  }
 
+  Future<ForecastData> fetchForecastInfoByCountry(String countryName) async {
+    //https://api.openweathermap.org/data/2.5/forecast?q=London,us&mode=json&appid=51d2e29f4181530ee1e5223365412e1c
 
+    print(countryName);
+    final response = await http.get(Uri.parse('https://api.openweathermap.org/data/2.5/forecast?q=$countryName,us&mode=json&appid=51d2e29f4181530ee1e5223365412e1c'));
+
+    if (response.statusCode == 200) {
+      return ForecastData.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to fetch data');
+    }
   }
 
 
