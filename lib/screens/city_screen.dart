@@ -6,6 +6,9 @@ import '../components/column_forecast.dart';
 import '../components/weather_parameter.dart';
 import '../services/weather.dart';
 import 'package:dart_date/dart_date.dart';
+import 'package:intl/intl.dart';
+import '../components/chart.dart';
+
 
 
 
@@ -29,6 +32,8 @@ class CityScreen extends StatefulWidget {
   num? temp_max;
   String? iconIndicator;
   List<dynamic>? weatherList;
+
+
 
 
   CityScreen({
@@ -67,11 +72,13 @@ class _CityScreenState extends State<CityScreen> {
     super.initState();
   }
 
+   List<TemperatureTimeData> weatherForecastList = [];
+
   String result = '';
   bool forecastToggle = false;
 
   String getTimeFormatted(String dateStamp) {
-    const timePattern = 'kk:mm';
+    const timePattern = 'ha';
     final time = DateTime.parse(dateStamp).format(timePattern, 'de_DE');
     return time;
   }
@@ -106,16 +113,25 @@ class _CityScreenState extends State<CityScreen> {
     return '$day $dayWithWord';
   }
 
+   String getTwelveHourTimeFormatted(String date)  {
+     Intl.defaultLocale = 'es';
+     return DateFormat.jm().format(DateTime.parse(date)).toString();
+   }
 
+
+
+//DateFormat.jm();
   @override
   Widget build(BuildContext context) {
-    const dayAndMonthPattern = 'dd MM';
 
-    final n = DateTime.parse(widget.weatherList![0]['dt_txt']);
-    final de_String = DateTime.parse(widget.weatherList![0]['dt_txt']).format(dayAndMonthPattern, 'de_DE');
-    print(n.getDate);
-    print(n.month);
-    print(de_String);
+    for(int i = 0; i < 10; i++) {
+      weatherForecastList.add(TemperatureTimeData(
+          time: getTimeFormatted(widget.weatherList![i]['dt_txt']),
+          temp: double.parse((widget.weatherList![i]['main']['temp'] - 273.15).toStringAsFixed(0))));
+    }
+
+
+
     return Scaffold(
       body: widget.currentTemp == 0.0  ?  Center(child: CircularProgressIndicator()) : Container(
         width: double.infinity,
@@ -319,8 +335,8 @@ class _CityScreenState extends State<CityScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              for(int i = 0; i < widget.weatherList!.length; i++)
 
+                              for(int i = 0; i < widget.weatherList!.length; i++)
                               ColumnForecast(
                                 weekDayName: getDateFormatted(widget.weatherList![i]['dt_txt']),
                                 dayMonth: getTimeFormatted(widget.weatherList![i]['dt_txt']),
@@ -354,8 +370,8 @@ class _CityScreenState extends State<CityScreen> {
                         Divider(thickness: 3.5, color: Color(0xff56319c), height: 25.0,),
 
                         SizedBox(
-                            height: 400,
-                            child: Chart()),
+                            height: MediaQuery.of(context).size.height * 0.5,
+                            child: Chart(weatherForecastList: weatherForecastList)),
 
                       ],
                     ),
@@ -416,6 +432,7 @@ class CustomSearchDelegate extends SearchDelegate {
     CountryInfo(id: 7, cityName: 'Warsaw', latitude: 2.3522, longitude: 48.8566),
     CountryInfo(id: 7, cityName: 'Oslo', latitude: 2.3522, longitude: 48.8566),
     CountryInfo(id: 7, cityName: 'USA', latitude: 2.3522, longitude: 48.8566),
+    CountryInfo(id: 7, cityName: 'Vancouver', latitude: 2.3522, longitude: 48.8566),
   ];
 
 
@@ -445,41 +462,13 @@ class CustomSearchDelegate extends SearchDelegate {
     return Container();
   }
 
-
-
-    // WeatherModelData weatherModel = WeatherModelData(
-    //     cityName = query;
-    //     currentTemp = forecastData.list[0]['main']['temp'];
-    //     localtime = forecastData.list[0]['dt_txt'];
-    //     weather_descriptions = forecastData.list[0]['weather'][0]['description'];
-    //     wind_speed = forecastData.list[0]['wind']['speed'];
-    //     wind_degree = forecastData.list[0]['wind']['deg'];
-    //     pressure = forecastData.list[0]['main']['pressure'];
-    // humidity = forecastData.list[0]['main']['humidity'];
-    // feelslike = forecastData.list[0]['main']['feels_like'];
-    // visibility = forecastData.list[0]['visibility'];
-    // timeDate = forecastData.list[0]['dt_txt'];
-    // sea_level = forecastData.list[0]['main']['sea_level'];
-    // grnd_level = forecastData.list[0]['main']['grnd_level'];
-    // temp_min = forecastData.list[0]['main']['temp_min'];
-    // cloudiness = forecastData.list[0]['clouds']['all'];
-    // temp_max = forecastData.list[0]['main']['temp_max'];
-    // weatherDayList = forecastData.list;
-    // );
-
     late double latitude;
     late double longitude;
 
 
-    // return weatherModel;
-
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    //https://api.openweathermap.org/geo/1.0/direct?q=New%20York&limit=200&appid=51d2e29f4181530ee1e5223365412e1c
-    //http://api.positionstack.com/v1/forward?access_key=0bb51ff08caab61411daf41550cf53cb&query=1600%20Pennsylvania%20Ave%20NW,%20Washington%20DC&fields=results.map_url
-
-
     return ListView.builder(
         itemCount: countriesList.length,
         prototypeItem: ListTile(
@@ -492,8 +481,6 @@ class CustomSearchDelegate extends SearchDelegate {
               title: Text(suggestion.cityName),
               onTap: () {
                 query = suggestion.cityName;
-
-
                 print('Quesry: $query');
                 Navigator.pushReplacement(
                     context,
@@ -505,11 +492,9 @@ class CustomSearchDelegate extends SearchDelegate {
         }
     );
   }
-
   @override
   ThemeData appBarTheme(BuildContext context) {
     var superThemeData = super.appBarTheme(context);
-
     return superThemeData.copyWith(
       colorScheme: ColorScheme.dark(),
       cardColor: Colors.white,
