@@ -13,12 +13,4 @@ class CountryInfo {
     required this.latitude,
     required this.longitude
   });
-
-  // For API
-  // factory CountryInfo.fromJson(Map<String, dynamic>) {
-  //   return CountryInfo(
-  //     cityName: json['city_name'],
-  //   );
-  // }
-
 }

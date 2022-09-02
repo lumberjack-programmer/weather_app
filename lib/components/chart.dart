@@ -15,19 +15,6 @@ class Chart extends StatefulWidget {
 
 class _ChartState extends State<Chart> {
 
-
-
-
-  // List<TemperatureTimeData> data = [
-  //   TemperatureTimeData(time: '12AM', temp: 16),
-  //   TemperatureTimeData(time: 'NOON', 17.5),
-  //   TemperatureTimeData('3PM', 27),
-  //   TemperatureTimeData('6PM', 32),
-  //   TemperatureTimeData('9PM', 32),
-  //
-  // ];
-
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -66,8 +53,6 @@ class _ChartState extends State<Chart> {
                   // Enable data label
                   dataLabelSettings: DataLabelSettings(isVisible: true))
             ]),
-
-
       ],
     );
   }

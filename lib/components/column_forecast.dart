@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/constants.dart';
+import '../constants.dart';
+
 class ColumnForecast extends StatelessWidget {
   ColumnForecast({
     required this.weekDayName,
@@ -22,17 +25,6 @@ class ColumnForecast extends StatelessWidget {
   final VoidCallback toggleState;
 
 
-  // weekDayName: getDateFormatted(widget.weatherList![i]['dt_txt']),
-  // dayMonth: '${widget.weatherList![i]['dt_txt']}',
-  // assetImage: AssetImage(WeatherModel.getWeatherImage(widget.weatherList![i]['weather'][0]['main'])),
-  // degrees: '${widget.weatherList![i]['main']['temp']}',
-  // description: '${widget.weatherList![i]['weather'][0]['description']}',
-  // minDegrees: '${(widget.weatherList![i]['main']['temp_min'] - 273.15).toStringAsFixed(0)}',
-  // maxDegrees: '${(widget.weatherList![i]['main']['temp'] - 273.15).toStringAsFixed(0)}',
-  // toggle: forecastToggle,
-  // toggleState: () {
-
-
   @override
   Widget build(BuildContext context) {
     List<Widget> forecastLongList = [
@@ -50,10 +42,10 @@ class ColumnForecast extends StatelessWidget {
           image: assetImage,
         ),
       ),
-      Text(dayMonth, style: TextStyle(fontSize: 12.0, color: Color(0xffa29fbc))),
+      Text(dayMonth, style: TextStyle(fontSize: 12.0, color: kGrayishBlue)),
       SizedBox(height: 5.0,),
-      Text('$minDegrees°'),
-      Text('$maxDegrees°'),
+      Text('$minDegrees$kCelsiusSign'),
+      Text('$maxDegrees$kCelsiusSign'),
     ];
 
 
@@ -85,16 +77,15 @@ class ColumnForecast extends StatelessWidget {
       ),
     ];
 
-
     return GestureDetector(
       onTap: toggleState,
       child: Container(
         padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(40.0),),
-          color: Color(0xff48319d),
+          color: kDarkBlue,
           border: Border.all(
-            color: Color(0xff6343bb),
+            color: kLightBlue,
           ),
           boxShadow: [
             BoxShadow(

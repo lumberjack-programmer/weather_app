@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constants.dart';
 
 class WeatherParameter extends StatelessWidget {
   WeatherParameter({required this.icon, required this.text, required this.value});
@@ -16,7 +17,7 @@ class WeatherParameter extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(25.0,),),
         border: Border.all(
-          color: Color(0xff9177d9),
+          color: kLightBlue,
         ),
         gradient: LinearGradient(
           stops: [
@@ -25,8 +26,8 @@ class WeatherParameter extends StatelessWidget {
           begin: Alignment(0.0, 0.0),
           end: Alignment(0.0, 1.0),
           colors: [
-            Color(0xff45278B),
-            Color(0xff432582),
+            kDarkViolet,
+            kDarkestViolet,
           ],
         ),
         boxShadow: [
