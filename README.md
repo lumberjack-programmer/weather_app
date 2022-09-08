@@ -1,6 +1,10 @@
 # weather_app
 
-A new Flutter project.
+![](https://github.com/lumberjack-programmer/weather_app/blob/master/weather_app_github_gif.gif)
+
+### Description:
+
+This is a flutter application Clima that shows weather conditions in more than 4000 cities. 
 
 ## Getting Started
 
