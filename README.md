@@ -6,4 +6,4 @@
 
 This is a flutter application Clima that shows weather conditions in more than 4000 cities by fetching data from API. 
 
-For more ![Instagram](https://www.instagram.com/lumberjack_programmer/)
+For more [Instagram](https://www.instagram.com/lumberjack_programmer/)
