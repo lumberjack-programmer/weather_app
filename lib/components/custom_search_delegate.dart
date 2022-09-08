@@ -42,7 +42,14 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   List<Widget>? buildActions(BuildContext context) {
-    return [];
+    return [
+      IconButton(
+      icon: Icon(Icons.clear),
+      onPressed: () {
+        query = '';
+      },
+    ),
+    ];
   }
 
   @override
@@ -56,10 +63,65 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    close(context, null);
-
+    if (query.length < 3) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Center(
+            child: Text(
+              "Search term must be longer than two letters.",
+            ),
+          )
+        ],
+      );
+    }
 
     return Container();
+
+    // InheritedBlocs.of(context)
+    //     .searchBloc
+    //     .searchTerm
+    //     .add(query);
+
+    // return Column(
+    //   children: <Widget>[
+    //     //Build the results based on the searchResults stream in the searchBloc
+    //     StreamBuilder(
+    //       stream: InheritedBlocs.of(context).searchBloc.searchResults,
+    //       builder: (context, AsyncSnapshot<List<Result>> snapshot) {
+    //         if (!snapshot.hasData) {
+    //           return Column(
+    //             crossAxisAlignment: CrossAxisAlignment.center,
+    //             mainAxisAlignment: MainAxisAlignment.center,
+    //             children: <Widget>[
+    //               Center(child: CircularProgressIndicator()),
+    //             ],
+    //           );
+    //         } else if (snapshot.data.length == 0) {
+    //           return Column(
+    //             children: <Widget>[
+    //               Text(
+    //                 "No Results Found.",
+    //               ),
+    //             ],
+    //           );
+    //         } else {
+    //           var results = snapshot.data;
+    //           return ListView.builder(
+    //             itemCount: results.length,
+    //             itemBuilder: (context, index) {
+    //               var result = results[index];
+    //               return ListTile(
+    //                 title: Text(result.title),
+    //               );
+    //             },
+    //           );
+    //         }
+    //       },
+    //     ),
+    //   ],
+    // );
+
   }
 
 
@@ -69,19 +131,17 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context)  {
 
-    return ListView.builder(
-        itemCount: allCities.length,
-        prototypeItem: ListTile(
-          title: Text('London'),
-        ),
 
+    final results =  allCities.where((element) =>
+        element.cityName.toLowerCase().contains(query.toLowerCase())).toSet().toList();
+
+    return ListView.builder(
+        itemCount: results.length,
         itemBuilder: (context, index) {
-          final suggestion = allCities[index].cityName;
+          final suggestion = results[index].cityName;
           return ListTile(
-              title: Text(allCities[index].cityName),
+              title: Text(results[index].cityName),
               onTap: () {
-                query = suggestion;
-                print('Quesry: $query');
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
@@ -91,7 +151,7 @@ class CustomSearchDelegate extends SearchDelegate {
           );
         }
     );
-    return Container();
+
   }
   @override
   ThemeData appBarTheme(BuildContext context) {

@@ -71,7 +71,6 @@ class _CityScreenState extends State<CityScreen> {
   @override
   Widget build(BuildContext context) {
 
-
     for(int i = 0; i < 10; i++) {
       weatherForecastList.add(TemperatureTimeData(
           time: DateFormat().add_j().format(DateTime.parse(widget.weatherList![i]['dt_txt'])),
